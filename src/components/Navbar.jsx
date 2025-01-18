@@ -31,7 +31,7 @@ const Navbar = () => {
 
                         {/* Number of items beside the cart */}
                         {cartItems.length > 0 && (
-                            <span className="ml-2 text-yellow-300 font-semibold">
+                            <span className="ml-2 text-white-300 font-semibold">
                                 ({cartItems.length})
                             </span>
                         )}

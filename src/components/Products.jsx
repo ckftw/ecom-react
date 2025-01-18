@@ -5,35 +5,40 @@ import { addToCart } from "../redux/cartSlice";
 import ProductCard from "./ProductCard";
 import { useState } from "react";
 import useDebounce from "../hooks/useDebounce";
-import { ToastContainer, toast } from 'react-toastify';  // Import ToastContainer and toast
-import 'react-toastify/dist/ReactToastify.css';  // Import styles for react-toastify
+import { ToastContainer, toast } from "react-toastify"; // Import ToastContainer and toast
+import "react-toastify/dist/ReactToastify.css"; // Import styles for react-toastify
 import SearchComponent from "./SearchComponent";
 
 const Products = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [category, setCategory] = useState('all')
+  const [category, setCategory] = useState("all");
   const products = useSelector((state) => state.cartItems.products);
   const dispatch = useDispatch();
   const debouncedValue = useDebounce(searchTerm);
 
   const addProducttoCart = (product) => {
     dispatch(addToCart(product));
-    toast.success(`${product.title} added to cart!`,{
-      autoClose:1500
-    })
+    toast.success(`${product.title} added to cart!`, {
+      autoClose: 1500,
+    });
   };
 
-  const filteredProducts  = products.filter((product)=>{
-    const matchesSearch = product.title.toLowerCase().includes(debouncedValue.toLowerCase());
-    const matchesCategory = category==="all" || product.category===category;
-    return matchesSearch && matchesCategory
-  })
+  const filteredProducts = products.filter((product) => {
+    const matchesSearch = product.title
+      .toLowerCase()
+      .includes(debouncedValue.toLowerCase());
+    const matchesCategory = category === "all" || product.category === category;
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <div>
       {/* Search and Category Filters */}
-      <div className="flex gap-4 mb-4 mt-2">
-      <SearchComponent value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+      <div className="flex flex-col sm:flex-row gap-4 mb-4 mt-2">
+        <SearchComponent
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
@@ -48,7 +53,7 @@ const Products = () => {
       </div>
 
       {/* Product List */}
-      <div className="flex items-center flex-wrap justify-between">
+      <div className="flex flex-wrap justify-center sm:justify-between gap-4">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
             <ProductCard
@@ -62,7 +67,7 @@ const Products = () => {
         )}
       </div>
 
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };

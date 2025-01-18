@@ -5,9 +5,12 @@ import { removeFromCart, updateItemQuantity } from "../redux/cartSlice";
 const CartItem = ({ item }) => {
     const dispatch = useDispatch();
     return (
-        <div key={item.id} className="flex items-center justify-between border-b pb-4">
+        <div
+            key={item.id}
+            className="flex flex-col sm:flex-row items-center justify-between border-b pb-4 space-y-4 sm:space-y-0"
+        >
             {/* Product Image and Details */}
-            <div className="flex items-center space-x-4 w-3/5">
+            <div className="flex items-center space-x-4 w-full sm:w-3/5">
                 <img
                     src={item.image}
                     alt={item.title}
@@ -19,10 +22,12 @@ const CartItem = ({ item }) => {
             </div>
 
             {/* Quantity Controls */}
-            <div className="flex items-center space-x-2 w-1/5 justify-center">
+            <div className="flex items-center space-x-2 w-full sm:w-1/5 justify-center">
                 <button
                     disabled={item.quantity === 1}
-                    onClick={() => dispatch(updateItemQuantity({ type: "DECREASE", id: item.id }))}
+                    onClick={() =>
+                        dispatch(updateItemQuantity({ type: "DECREASE", id: item.id }))
+                    }
                     className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1 px-3 rounded"
                 >
                     -
@@ -35,7 +40,9 @@ const CartItem = ({ item }) => {
                 />
                 <button
                     disabled={item.quantity >= 10}
-                    onClick={() => dispatch(updateItemQuantity({ type: "INCREASE", id: item.id }))}
+                    onClick={() =>
+                        dispatch(updateItemQuantity({ type: "INCREASE", id: item.id }))
+                    }
                     className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1 px-3 rounded"
                 >
                     +
@@ -43,12 +50,12 @@ const CartItem = ({ item }) => {
             </div>
 
             {/* Product Price */}
-            <div className="w-1/5 flex justify-center">
+            <div className="w-full sm:w-1/5 flex justify-center">
                 <p className="text-lg font-semibold">$ {item.price}</p>
             </div>
 
             {/* Delete Button */}
-            <div className="flex items-center justify-center w-1/5">
+            <div className="flex items-center justify-center w-full sm:w-1/5">
                 <button
                     onClick={() => dispatch(removeFromCart(item.id))}
                     className="text-red-500 hover:text-red-600 font-semibold"
